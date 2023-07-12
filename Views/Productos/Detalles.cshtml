@@ -1,0 +1,24 @@
+﻿@model CatalogoProductos.Models.Producto
+
+<h2>Detalles del producto</h2>
+
+<div>
+    <label>Nombre:</label>
+    <span>@Model.Nombre</span>
+</div>
+<div>
+    <label>Stock:</label>
+    <span>@Model.Stock</span>
+</div>
+<div>
+    <label>Precio:</label>
+    <span>@Model.Precio</span>
+</div>
+<div>
+    <label>Descripción:</label>
+    <span>@Model.Descripcion</span>
+</div>
+
+<p>
+    <a class="btn btn-outline-dark" href="@Url.Action("Index")">Volver a la lista</a>
+</p>

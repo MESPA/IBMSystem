@@ -1,0 +1,46 @@
+﻿@model CatalogoProductos.Models.Cliente
+
+<form id="formularioEditar" method="post" action="@Url.Action("Editar", new { id = Model.Id })">
+    <div class="form-group">
+        <label class="col-lg-8 control-label" for="nombre">Nombre:</label>
+        <input class="form-control" type="text" id="nombre" name="nombre" value="@Model.Nombre" required>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-8 control-label" for="direccion">Dirección:</label>
+        <input class="form-control" type="text" id="direccion" name="direccion" value="@Model.Direccion" required>
+    </div>
+    <div>
+        <button class="btn btn-success" type="submit">Guardar Cliente</button>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $('#formularioEditar').submit(function (e) {
+            e.preventDefault();
+
+            // Obtener los valores del formulario
+            var nombre = $('#nombre').val();
+            var direccion = $('#direccion').val();
+
+            // Realizar una petición AJAX para enviar los datos al servidor
+            $.ajax({
+                url: $(this).attr('action'),
+                method: $(this).attr('method'),
+                data: {
+                    nombre: nombre,
+                    direccion: direccion
+                },
+                success: function (response) {
+                    // Manejar la respuesta del servidor
+                    // Por ejemplo, redirigir a la página de detalles del cliente
+                    window.location.href = '@Url.Action("Detalles", new { id = Model.Id })';
+                },
+                error: function (error) {
+                    // Manejar errores
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>

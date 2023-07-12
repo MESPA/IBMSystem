@@ -1,0 +1,29 @@
+﻿@model CatalogoProductos.Models.Orden
+
+<h2>Detalles de la orden de pedido</h2>
+
+<div>
+    <label>Fecha:</label>
+    <span>@Model.Fecha</span>
+</div>
+<div>
+    <label>Cliente:</label>
+    <span>@Model.Cliente.Nombre</span>
+</div>
+<div>
+    <label>Estatus:</label>
+    <span>@Model.Estatus</span>
+</div>
+<div>
+    <label>Productos:</label>
+    <ul>
+        @foreach (var producto in Model.Productos)
+        {
+            <li>@producto.Nombre</li>
+        }
+    </ul>
+</div>
+
+<p>
+    <a href="@Url.Action("Index")">Volver a la lista</a>
+</p>

@@ -1,0 +1,105 @@
+﻿@model CatalogoProductos.Models.Orden
+
+
+<div class="container">
+    <div class="form-group">
+        <h1>Crear Orden</h1>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+
+        <form class="" id="formularioCrear" method="post" action="@Url.Action("Crear")">
+            <div class="form-group">
+                <label class="col-lg-8 control-label" for="fecha">Fecha:</label>
+                <input class="form-control" type="date" id="fecha" name="fecha" required>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-8 control-label" for="clienteId">Cliente:</label>
+                <select class="custom-select" id="clienteId" name="clienteId" required>
+                    <option value="">Seleccione un cliente</option>
+                    @foreach (var cliente in ViewBag.Clientes)
+                    {
+                        <option value="@cliente.Id">@cliente.Nombre</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-8 control-label" for="productosSeleccionados">Productos:</label>
+
+                @foreach (var producto in ViewBag.Productos)
+                {
+                    <div>
+                        <input type="checkbox" name="productosSeleccionados" value="@producto.Id" />
+                        <label>@producto.Nombre</label>
+                    </div>
+                }
+
+            </div>
+            @*<div class="form-group">
+                    <label class="col-lg-8 control-label" for="estatus">Estatus:</label>
+                    <input class="form-control" type="text" id="estatus" name="estatus" required>
+                </div>*@
+
+            <div class="form-group">
+                <label class="col-lg-8 control-label" for="estado">Estado:</label>
+                <select class="custom-select" id="estado" name="estado">
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="EnProceso">En Proceso</option>
+                    <option value="Completada">Completada</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-success" type="submit">Crear Orden</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#formularioCrear').submit(function (e) {
+            e.preventDefault();
+
+            // Obtener los valores del formulario
+            var fecha = $('#fecha').val();
+            var clienteId = $('#clienteId').val();
+            var productosSeleccionados = $('#productosSeleccionados').val();
+            var estatus = $('#estatus').val();
+
+            // Realizar una petición AJAX para enviar los datos al servidor
+            $.ajax({
+                url: $(this).attr('action'),
+                method: $(this).attr('method'),
+                data: {
+                    fecha: fecha,
+                    clienteId: clienteId,
+                    productosSeleccionados: productosSeleccionados,
+                    estatus: estatus
+                },
+                success: function (response) {
+                    // Manejar la respuesta del servidor
+
+// Mostrar una alerta de éxito utilizando SweetAlert2
+        Swal.fire({
+            icon: 'success',
+            title: '¡Acción exitosa!',
+            text: 'La acción se ha realizado correctamente.',
+            confirmButtonText: 'Aceptar'
+        }).then(function () {
+            // Redirigir a la página de destino después de cerrar la alerta
+            window.location.href = '@Url.Action("Index")';
+        });
+    },
+                },
+                error: function (error) {
+                    // Manejar errores
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>

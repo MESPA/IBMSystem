@@ -1,0 +1,61 @@
+﻿@model CatalogoProductos.Models.Cliente
+
+<div class="container">
+    <div class="form-group">
+        <h1>
+            Crear Cliente
+        </h1>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+
+
+        <form id="formularioCrear" method="post" action="@Url.Action("Crear")">
+            <div class="form-group">
+                <label class="col-lg-8 control-label" for="nombre">Nombre:</label>
+                <input class="form-control" type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-8 control-label" for="direccion">Dirección:</label>
+                <input class="form-control" type="text" id="direccion" name="direccion" required>
+            </div>
+            <div>
+                <button class="btn btn-success" type="submit">Crear</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#formularioCrear').submit(function (e) {
+            e.preventDefault();
+
+            // Obtener los valores del formulario
+            var nombre = $('#nombre').val();
+            var direccion = $('#direccion').val();
+
+            // Realizar una petición AJAX para enviar los datos al servidor
+            $.ajax({
+                url: $(this).attr('action'),
+                method: $(this).attr('method'),
+                data: {
+                    nombre: nombre,
+                    direccion: direccion
+                },
+                success: function (response) {
+                    // Manejar la respuesta del servidor
+                    // Por ejemplo, redirigir a la página de lista de clientes
+                    window.location.href = '@Url.Action("Index")';
+                },
+                error: function (error) {
+                    // Manejar errores
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>

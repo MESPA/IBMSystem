@@ -1,0 +1,96 @@
+﻿@model CatalogoProductos.Models.Producto
+<div class="container">
+    <div class="form-group">
+        <h1>
+            Crear Producto
+        </h1>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+
+
+        <form class="form-horizontal" id="formularioCrear" method="post" action="@Url.Action("Crear")">
+            <div class="form-group ">
+                <label class="col-lg-8 control-label" for="nombre">Nombre:</label>
+                <input class="form-control" type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group ">
+                <label class="col-lg-8 control-label" for="stock">Stock:</label>
+                <input class="form-control" type="number" id="stock" name="stock" required>
+            </div>
+            <div class="form-group ">
+                <label class="col-lg-8 control-label" for="precio">Precio:</label>
+                <input class="form-control" type="number" id="precio" name="precio" step="0.01" required>
+            </div>
+            <div class="form-group ">
+                <label class="col-lg-8 control-label" for="descripcion">Descripción:</label>
+                <textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
+            </div>
+
+            <div class="form-group ">
+                <label for="imagenes">Imágenes:</label>
+                <input class="col-lg-8 control-label" type="file" id="imagenes" name="imagenes" multiple>
+            </div>
+
+            <div class="form-group ">
+                <button class="btn btn-success" type="submit" id="Producto">Crear Producto</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        $('#formularioCrear').submit(function (e) {
+            e.preventDefault();
+
+            // Obtener los valores del formulario
+
+            var nombre = $('#nombre').val();
+            var precio = $('#precio').val();
+            var descripcion = $('#descripcion').val();
+
+            var formData = new FormData();
+            formData.append('nombre', nombre);
+            formData.append('precio', precio);
+            formData.append('descripcion', descripcion);
+
+            var imagenes = $('#imagenes')[0].files;
+            for (var i = 0; i < imagenes.length; i++) {
+                formData.append('imagenes', imagenes[i]);
+            }
+
+            // Realizar una petición AJAX para enviar los datos al servidor
+
+            $.ajax({
+                url: $(this).attr('action'),
+                method: $(this).attr('method'),
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success) {
+                        // Redirigir a la página de detalles del producto creado
+                        Swal.fire(
+                            'Se Agrego el Producto con Exito!',
+                            'Presiona el Boton Ok!',
+                            'success'
+                        )
+                        window.location.href = '@Url.Action("Index")/' + response.id;
+                    } else {
+                        // Manejar error
+                    }
+                },
+                error: function (error) {
+                    // Manejar errores
+                    console.log(error);
+                }
+            });
+        });
+    });
+
+
+</script>

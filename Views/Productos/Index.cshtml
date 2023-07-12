@@ -1,0 +1,87 @@
+﻿@model IEnumerable<CatalogoProductos.Models.Producto>
+
+
+<div>
+    <h1>Lista De Productos</h1>
+</div>
+<a class="btn btn-success" href="@Url.Action("Crear")" enctype="multipart/form-data">Crear Producto</a>
+<br />
+<br />
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Cantidad Disponible</th>
+            <th>Precio</th>
+            <th>Descripción</th>
+            <th>Imagen</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var producto in Model)
+        {
+            <tr>
+                <td>@producto.Nombre</td>
+                <td>@producto.Stock</td>
+                <td>@producto.Precio</td>
+                <td>@producto.Descripcion</td>
+                <td>
+                    <div>
+                        @foreach (var imagen in producto.Imagenes)
+                        {
+                            <img src="@Url.Content("~/imagenes/" + imagen.RutaImagen)" alt="Imagen del producto" width="100">
+                        }
+                    </div>
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="@Url.Action("Detalles", new { id = producto.Id })">Detalles</a> |
+
+                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalDetalles-@producto.Id">
+                        Ver detalles Modal
+                    </a>|
+                    <a class="btn btn-info" href="@Url.Action("Editar", new { id = producto.Id })">Editar</a> |
+                    <div class="modal fade" id="modalDetalles-@producto.Id" tabindex="-1" role="dialog" aria-labelledby="modalDetallesLabel-@producto.Id" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalDetallesLabel-@producto.Id">Detalles de Producto</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label class="col-lg-8 control-label">Nombre </label>
+                                    <p>@producto.Nombre</p>
+                                    <label class="col-lg-8 control-label">Descripcion </label>
+                                    <p>@producto.Descripcion</p>
+                                    <label class="col-lg-8 control-label">Stock </label>
+                                    <p>@producto.Stock</p>
+                                    <label class="col-lg-8 control-label">Precio </label>
+                                    <p>@producto.Precio</p>
+                                    <!-- Resto de los detalles del producto -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+            }
+    </tbody>
+</table>
+
+
+
+    <!-- Modal de detalles -->
+    
+
+
+
+<script>$(document).ready(function () {
+        // Código JavaScript/jQuery aquí
+    });</script>

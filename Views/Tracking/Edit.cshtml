@@ -1,0 +1,46 @@
+@model CatalogoProductos.Models.Tracking
+
+@{
+    ViewData["Title"] = "Cambiar Estatus de Seguimiento";
+}
+
+<h1>Cambiar Estatus de Seguimiento</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="OrdenId" class="control-label"></label>
+                <input asp-for="OrdenId" class="form-control" />
+                <span asp-validation-for="OrdenId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-8 control-label" for="Estatus">Estatus:</label>
+                <select class="custom-select" id="estatus" name="estatus">
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="EnProceso">En Proceso</option>
+                    <option value="Completada">Completada</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a  class="btn btn-primary" asp-action="Index">Volver</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
