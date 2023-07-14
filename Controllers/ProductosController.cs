@@ -44,14 +44,59 @@ namespace CatalogoProductos.Controllers
         }
 
         // Acción para crear un nuevo producto (POST)
+        //[HttpPost]
+        //public IActionResult Crear(Producto producto, List<IFormFile> imagenes)
+        //{
+        //    var productos = _context.Productos.OrderByDescending(x => x.Id).FirstOrDefault();
+
+        //    var insertarproductos = new Producto();
+
+
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (imagenes != null && imagenes.Count > 0)
+        //        {
+        //            foreach (var imagen in imagenes)
+        //            {
+        //                if (imagen.Length > 0)
+        //                {
+        //                    var imagenProducto = new ImagenProducto
+        //                    {
+        //                        RutaImagen = Guid.NewGuid().ToString() + "_" + imagen.FileName,
+        //                    };
+        //                    producto.Imagenes.Add(imagenProducto);
+
+        //                    // Guardar la imagen en el sistema de archivos
+        //                    var rutaArchivo = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagenes", imagenProducto.RutaImagen);
+        //                    using (var fileStream = new FileStream(rutaArchivo, FileMode.Create))
+        //                    {
+        //                        imagen.CopyTo(fileStream);
+        //                    }
+        //                }
+        //            }
+        //        }
+
+        //        insertarproductos.Nombre = producto.Nombre;
+        //        insertarproductos.Descripcion = producto.Descripcion;
+        //        insertarproductos.Precio = producto.Precio;
+        //        insertarproductos.Stock = producto.Stock;
+        //        insertarproductos.Imagenes = producto.Imagenes;
+        //        _context.Productos.Add(insertarproductos);
+        //        _context.SaveChanges();
+        //        //return RedirectToAction(nameof(Index));
+        //        // Crear un objeto de respuesta JSON con el ID del producto creado
+        //        var response = new { success = true};
+
+        //        return Json(response); // Devolver la respuesta JSON
+        //    }
+        //    return View(producto);
+        //}
+
         [HttpPost]
         public IActionResult Crear(Producto producto, List<IFormFile> imagenes)
         {
             var productos = _context.Productos.OrderByDescending(x => x.Id).FirstOrDefault();
-
-            var insertarproductos = new Producto();
-            
-
 
             if (ModelState.IsValid)
             {
@@ -65,10 +110,11 @@ namespace CatalogoProductos.Controllers
                             {
                                 RutaImagen = Guid.NewGuid().ToString() + "_" + imagen.FileName,
                             };
+                            var rutaArchivo = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagenes", imagenProducto.RutaImagen);
                             producto.Imagenes.Add(imagenProducto);
 
                             // Guardar la imagen en el sistema de archivos
-                            var rutaArchivo = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagenes", imagenProducto.RutaImagen);
+                            
                             using (var fileStream = new FileStream(rutaArchivo, FileMode.Create))
                             {
                                 imagen.CopyTo(fileStream);
@@ -77,19 +123,19 @@ namespace CatalogoProductos.Controllers
                     }
                 }
 
-                insertarproductos.Nombre = producto.Nombre;
-                insertarproductos.Descripcion = producto.Descripcion;
-                insertarproductos.Precio = producto.Precio;
-                insertarproductos.Stock = producto.Stock;
-                insertarproductos.Imagenes = producto.Imagenes;
-                _context.Productos.Add(insertarproductos);
+                _context.Productos.Add(producto);
                 _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+
+             
+                var response = new { success = true};
+
+                return Json(response); 
             }
+
             return View(producto);
         }
 
-        // Acción para editar un producto (GET)
+
         public IActionResult Editar(int id)
         {
             var producto = _context.Productos.FirstOrDefault(p => p.Id == id);

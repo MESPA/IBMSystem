@@ -14,6 +14,8 @@ namespace CatalogoProductos.Models
         public int Stock { get; set; }
         public decimal Precio { get; set; }
         public string Descripcion { get; set; }
+        public string UnidadMedida { get; set; }
+        public List<Orden> Ordenes { get; set; }
         public List<ImagenProducto> Imagenes { get; set; }
     }
 }

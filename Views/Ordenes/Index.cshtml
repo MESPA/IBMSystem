@@ -1,44 +1,53 @@
 ﻿@model IEnumerable<CatalogoProductos.Models.Orden>
 
-<div>
-    <h1>Lista De Ordenes</h1>
-</div>
-<a class="btn btn-success" href="@Url.Action("Crear")" enctype="multipart/form-data">Crear Orden</a> | <a class="btn btn-primary" href="@Url.Action("ReporteOrdenes", "Ordenes")">Generar Reporte</a>
-<br />
+    <div>
+        <h1>Lista De Ordenes</h1>
+    </div>
+    <a class="btn btn-success" href="@Url.Action("Crear")" enctype="multipart/form-data">Crear Orden</a> | <a class="btn btn-primary" href="@Url.Action("ReporteOrdenes", "Ordenes")">Generar Reporte</a>
+    <br />
 
-<br />
-<table class="table">
-    <thead class="table-dark">
-        <tr>
-            <th>Fecha</th>
-            <th>Cliente</th>
-            <th>Estatus</th>
-            <th>Nombre</th>
-            <th>Descripcion</th>
-            <th>Precio</th>
-            <th>Total de Ordenes</th>
-      
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var orden in Model)
-        {
-            @foreach (var producto in orden.Productos)
+    <br />
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Estatus</th>
+                <th>Nombre Producto</th>
+                <th>Descripcion Producto</th>
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ordenProducto in Model)
             {
-                <tr>
-                    <td>@orden.Fecha</td>
-                    <td>@orden.Cliente.Nombre</td>
-                    <td>@orden.Estatus</td>
-                    <td>@producto.Nombre</td>
-                    <td>@producto.Descripcion</td>
-                    <td>@producto.Precio</td>
-                    <td>@orden.Cliente.Ordenes.Count()</td>
+               
+                    <tr>
+                        <td>@ordenProducto.Fecha</td>
+                        <td>@ordenProducto.Cliente.Nombre</td>
+                        <td>@ordenProducto.Estatus</td>
 
-
-
-                   
-                </tr>
+                        <td>
+                            <ul>
+                                @foreach (var producto in ordenProducto.Productos)
+                                {
+                                    <li>@producto.Nombre</li>
+                                }
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                @foreach (var producto in ordenProducto.Productos)
+                                {
+                                    <li>@producto.Descripcion</li>
+                                }
+                            </ul>
+                        </td>
+                        
+                    </tr>
+                    
                 }
-            }
-        </tbody>
-</table>
+            </tbody>
+    </table>

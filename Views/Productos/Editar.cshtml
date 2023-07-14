@@ -1,37 +1,40 @@
 ﻿@model CatalogoProductos.Models.Producto
 
-    <div>
-        <h1>Editar Producto</h1>
-    </div>
-    <br />
-    <br />
-    <div class="container">
-        <div class="row">
-            <form id="formularioEditar" method="post" action="@Url.Action("Editar", new { id = Model.Id })">
-                <div class="form-group ">
-                    <label class="col-lg-8 control-label" for="nombre">Nombre:</label>
-                    <input class="form-control" type="text" id="nombre" name="nombre" required>
-                </div>
-                <div class="form-group ">
-                    <label class="col-lg-8 control-label" for="stock">Stock:</label>
-                    <input class="form-control" type="number" id="stock" name="stock" required>
-                </div>
-                <div class="form-group ">
-                    <label class="col-lg-8 control-label" for="precio">Precio:</label>
-                    <input class="form-control" type="number" id="precio" name="precio" step="0.01" required>
-                </div>
-                <div class="form-group ">
-                    <label class="col-lg-8 control-label" for="descripcion">Descripción:</label>
-                    <textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
-                </div>
-                <div>
-                    <button class="btn btn-success" type="submit">Guardar</button>
-                </div>
-            </form>
+<div>
+    <h1>Editar Producto</h1>
+</div>
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <form id="formularioEditar" method="post" action="@Url.Action("Editar", new { id = Model.Id })">
+            <div class="form-group ">
+                <label class="col-lg-8 control-label" for="nombre">Nombre:</label>
+                <input class="form-control" type="text" id="nombre" name="nombre" value="@Model.Nombre" required>
+            </div>
+            <div class="form-group ">
+                <label class="col-lg-8 control-label" for="stock">Stock:</label>
+                <input class="form-control" type="number" id="stock" name="stock" value="@Model.Stock" required>
+            </div>
+            <div class="form-group ">
+                <label class="col-lg-8 control-label" for="precio">Precio:</label>
+                <input class="form-control" type="number" id="precio" name="precio" value="@Model.Precio" step="0.01" required>
+            </div>
+            <div class="form-group ">
+                <label class="col-lg-8 control-label" for="descripcion">Descripción:</label>
+                <textarea class="form-control" id="descripcion" name="descripcion" value="@Model.Descripcion" required></textarea>
+            </div>
+            <div>
+                <button class="btn btn-success" type="submit">Guardar</button>
+            </div>
+        </form>
 
-        </div>
     </div>
+</div>
 
+
+@section scripts
+{
     <script>
     $(document).ready(function () {
         $('#formularioEditar').submit(function (e) {
@@ -66,3 +69,6 @@
         });
     });
     </script>
+}
+
+

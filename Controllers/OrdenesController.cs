@@ -39,18 +39,6 @@ namespace CatalogoProductos.Controllers
             var ordenes = _context.Ordenes.Include(o => o.Cliente).Include(p => p.Productos).ToList();
 
             return View(ordenes);
-            //    var ordenesPorCliente = _context.Clientes
-            //.Include(c => c.Ordenes)
-            //    .ThenInclude(o => o.Productos)
-            //.Select(c => new 
-            //{
-            //    Cliente = c,
-            //    TotalOrdenes = c.Ordenes.Count(),
-            //    Productos = c.Ordenes.SelectMany(o => o.Productos)
-            //})
-            //.ToList();
-            //    ViewBag.ordenes = ordenesPorCliente;
-            //    return View();
         }
 
 
@@ -100,11 +88,12 @@ namespace CatalogoProductos.Controllers
                 orden.Productos = productos;
                 orden.Estatus = estado;
 
-                // Asignar los productos seleccionados a la orden
-                orden.Productos = _context.Productos.Where(p => productosSeleccionados.Contains(p.Id)).ToList();
+              
+                //orden.Productos = _context.Productos.Where(p => productosSeleccionados.Contains(p.Id)).ToList();
 
                 var ultimaorden = _context.Ordenes.OrderByDescending(x => x.Id).FirstOrDefault();
 
+                
 
 
                 var traking = new Tracking();
@@ -113,18 +102,33 @@ namespace CatalogoProductos.Controllers
                     traking.Descripcion = item.Descripcion;
                 }
                 traking.Estatus = estado;
-                traking.OrdenId = ultimaorden.Id + 1;
+
+                if (ultimaorden == null)
+                {
+                    traking.OrdenId =  1;
+                }
+                else
+                {
+                    traking.OrdenId = ultimaorden.Id + 1;
+                }
+            
 
                 _context.Trackings.Add(traking);
                 _context.Ordenes.Add(orden);
                 _context.SaveChanges();
 
 
-                return RedirectToAction(nameof(Index));
+                var response = new { success = true };
+
+            return Json(response);
             }
             ViewBag.Clientes = _context.Clientes.ToList();
             ViewBag.Productos = _context.Productos.ToList();
             return View(orden);
+        }
+
+        public void guardarTrackin()
+        {
         }
 
         // Acción para editar una orden de pedido (GET)

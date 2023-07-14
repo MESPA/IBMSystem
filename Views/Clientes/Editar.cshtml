@@ -34,6 +34,7 @@
                 success: function (response) {
                     // Manejar la respuesta del servidor
                     // Por ejemplo, redirigir a la página de detalles del cliente
+
                     window.location.href = '@Url.Action("Detalles", new { id = Model.Id })';
                 },
                 error: function (error) {

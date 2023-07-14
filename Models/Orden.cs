@@ -16,6 +16,7 @@ namespace CatalogoProductos.Models
         public DateTime Fecha { get; set; }
         public int ClienteId { get; set; }
         public Cliente Cliente { get; set; }
+       
         public List<Producto> Productos { get; set; }
         public string Estatus { get; set; }
     }

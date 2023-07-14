@@ -3,14 +3,16 @@ using System;
 using CatalogoProductos.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CatalogoProductos.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230714174104_inaicial")]
+    partial class inaicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,18 +92,20 @@ namespace CatalogoProductos.Migrations
                     b.Property<string>("Nombre")
                         .HasColumnType("text");
 
+                    b.Property<int?>("OrdenId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Precio")
                         .HasColumnType("decimal(18, 2)");
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
-                    b.Property<string>("UnidadMedida")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ClienteId");
+
+                    b.HasIndex("OrdenId");
 
                     b.ToTable("Productos");
                 });
@@ -124,21 +128,6 @@ namespace CatalogoProductos.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Trackings");
-                });
-
-            modelBuilder.Entity("OrdenProducto", b =>
-                {
-                    b.Property<int>("OrdenesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductosId")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrdenesId", "ProductosId");
-
-                    b.HasIndex("ProductosId");
-
-                    b.ToTable("OrdenProducto");
                 });
 
             modelBuilder.Entity("CatalogoProductos.Models.ImagenProducto", b =>
@@ -168,27 +157,21 @@ namespace CatalogoProductos.Migrations
                     b.HasOne("CatalogoProductos.Models.Cliente", null)
                         .WithMany("Productos")
                         .HasForeignKey("ClienteId");
-                });
 
-            modelBuilder.Entity("OrdenProducto", b =>
-                {
                     b.HasOne("CatalogoProductos.Models.Orden", null)
-                        .WithMany()
-                        .HasForeignKey("OrdenesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CatalogoProductos.Models.Producto", null)
-                        .WithMany()
-                        .HasForeignKey("ProductosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Productos")
+                        .HasForeignKey("OrdenId");
                 });
 
             modelBuilder.Entity("CatalogoProductos.Models.Cliente", b =>
                 {
                     b.Navigation("Ordenes");
 
+                    b.Navigation("Productos");
+                });
+
+            modelBuilder.Entity("CatalogoProductos.Models.Orden", b =>
+                {
                     b.Navigation("Productos");
                 });
 

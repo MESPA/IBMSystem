@@ -31,6 +31,11 @@ namespace CatalogoProductos.Models
                 .WithMany(c => c.Ordenes)
                 .HasForeignKey(o => o.ClienteId);
 
+         modelBuilder.Entity<Orden>()
+        .HasMany(o => o.Productos)
+        .WithMany(p => p.Ordenes)
+        .UsingEntity(j => j.ToTable("OrdenProducto"));
+
 
             // Configuración de relaciones entre entidades
 

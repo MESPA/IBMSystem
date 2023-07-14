@@ -46,8 +46,11 @@ public class ClientesController : Controller
         {
             _context.Clientes.Add(cliente);
             _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            var response = new { success = true };
+
+            return Json(response);
         }
+    
         return View(cliente);
     }
 

@@ -28,34 +28,51 @@
 </div>
 
 
+@section scripts
+{
+    <script>$(document).ready(function () {
+            $('#formularioCrear').submit(function (e) {
+                e.preventDefault();
 
-<script>
-    $(document).ready(function () {
-        $('#formularioCrear').submit(function (e) {
-            e.preventDefault();
+                // Obtener los valores del formulario
+                var nombre = $('#nombre').val();
+                var direccion = $('#direccion').val();
 
-            // Obtener los valores del formulario
-            var nombre = $('#nombre').val();
-            var direccion = $('#direccion').val();
+                // Realizar una petición AJAX para enviar los datos al servidor
 
-            // Realizar una petición AJAX para enviar los datos al servidor
-            $.ajax({
-                url: $(this).attr('action'),
-                method: $(this).attr('method'),
-                data: {
-                    nombre: nombre,
-                    direccion: direccion
-                },
-                success: function (response) {
-                    // Manejar la respuesta del servidor
-                    // Por ejemplo, redirigir a la página de lista de clientes
-                    window.location.href = '@Url.Action("Index")';
-                },
-                error: function (error) {
-                    // Manejar errores
-                    console.log(error);
-                }
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: $(this).attr('method'),
+                    data: {
+                        nombre: nombre,
+                        direccion: direccion
+                    },
+                    success: function (response) {
+
+                        if (response.success) {
+                            // Mostrar notificación SweetAlert2
+
+                            Swal.fire(
+                                'Cliente creado',
+                                'El Cliente se creó correctamente',
+                                'success'
+                            ).then(function () {
+
+                                // Redireccionar a la página de detalles del producto
+
+                                window.location.href = '/Clientes/Index/';
+                            });
+                        } else {
+                            // Manejar error
+                        }
+                    },
+                    error: function (error) {
+                        // Manejar errores
+                        console.log(error);
+                    }
+                });
             });
-        });
-    });
-</script>
+        });</script>
+
+}
+

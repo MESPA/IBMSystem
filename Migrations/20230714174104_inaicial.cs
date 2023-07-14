@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace CatalogoProductos.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class inaicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
